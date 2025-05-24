@@ -3,21 +3,33 @@ using UnityEngine;
 public class FireBall : MonoBehaviour
 {
     public float lifeTime = 5f;
-    public int cellSize = 8;
+    public int flyingTowards = 1;
+    public int damage = 1;
+    public int speed = 1;
+    public int knockback = 0;
 
-    public int feildStartXTop = 0;
-    public int feildStartYTop = 0;
-    public int feildStartXBottom = 24;
-    public int feildStartYBottom = -16;
+    int cellSize = 8;
+
+    int feildStartXTop = 0;
+    int feildStartYTop = 0;
+    int feildStartXBottom = 24;
+    int feildStartYBottom = -16;
 
     bool isMoving = false;
     bool endMoving = false;
 
     Vector3 startPos;
     Vector3 endPos;
-    public float duration = 1f;
+    public float duration = 3f;
     void Start()
     {
+        TurnManager manager = FindFirstObjectByType<TurnManager>();
+        feildStartXTop = manager.feildStartXTop;
+        feildStartYTop = manager.feildStartYTop;
+        feildStartXBottom = manager.feildStartXBottom;
+        feildStartYBottom = manager.feildStartYBottom;
+        cellSize = manager.cellSize;
+
         SnapToNearestCellCenter();
     }
     private void Update()
@@ -43,14 +55,29 @@ public class FireBall : MonoBehaviour
             endMoving = false;
         }
     }
-    //void OnCollisionEnter2D(Collision2D collision)
-    //{
-    //    // Любые дополнительные эффекты при попадании снаряда
-    //    Debug.Log("Попадание в цель!");
 
-    //    // Удаляем снаряд после попадания
-    //    Destroy(gameObject);
-    //}
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        // Проверяем попадание в объект-враг
+        if (flyingTowards == 1)
+        {
+            Enemy enemy = collision.collider.GetComponent<Enemy>();
+            if (enemy != null)
+            {
+                enemy.TakeDamage(damage, knockback); // Наносим единичный урон
+                Destroy(gameObject);  // Уничтожаем пулю
+            }
+        }
+        else
+        {
+            Player player = collision.collider.GetComponent<Player>();
+            if (player != null)
+            {
+                player.TakeDamage(damage, knockback);
+                Destroy(gameObject);
+            }
+        }
+    }
 
     void SnapToNearestCellCenter()
     {
@@ -70,7 +97,7 @@ public class FireBall : MonoBehaviour
     {
         startPos = transform.position;
         // Рассчитываем конечную позицию (на 2 блока ниже)
-        endPos = new Vector3(startPos.x + cellSize, startPos.y, startPos.z);
+        endPos = new Vector3(startPos.x + cellSize * flyingTowards * speed, startPos.y, startPos.z);
         // Начинаем движение
         isMoving = true;
     }

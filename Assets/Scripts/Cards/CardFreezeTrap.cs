@@ -1,11 +1,10 @@
 using UnityEngine;
 
-public class CardFireBall : MonoBehaviour
+public class CardFreezeTrap : MonoBehaviour
 {
     public GameObject bulletPrefab;      // Предмет-представитель снаряда
     public Transform firePoint;          // Точка, откуда стреляют
     int cellSize = 8;
-
     private void Start()
     {
         TurnManager manager = FindFirstObjectByType<TurnManager>();
