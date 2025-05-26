@@ -1,11 +1,12 @@
 using UnityEngine;
-using DG.Tweening; // Требуется DOTween для плавной анимации
+using DG.Tweening;
+using UnityEngine.Serialization; // Требуется DOTween для плавной анимации
 
 public class CurtainVFX : MonoBehaviour
 {
     public GameObject curtainLeft;
     public GameObject curtainRight;
-    public GameObject light;
+    [FormerlySerializedAs("light")] public GameObject lightObject;
     
     [Header("Настройки анимации")]
     public float animationDuration = 1f;
@@ -35,7 +36,7 @@ public class CurtainVFX : MonoBehaviour
             curtainRight.transform.DOLocalMove(rightCurtainClosedPosition, animationDuration)
                 .SetEase(easingType);
         }
-        light.GetComponent<SpriteRenderer>().DOFade(1f, animationDuration);
+        lightObject.GetComponent<SpriteRenderer>().DOFade(1f, animationDuration);
     }
 
     public void OpenCurtains()
@@ -52,6 +53,6 @@ public class CurtainVFX : MonoBehaviour
                 .SetEase(easingType);
         }
 
-        light.GetComponent<SpriteRenderer>().DOFade(0f, animationDuration);
+        lightObject.GetComponent<SpriteRenderer>().DOFade(0f, animationDuration);
     }
 }

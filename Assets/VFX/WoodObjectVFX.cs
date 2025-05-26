@@ -65,12 +65,12 @@ public class WoodObjectVFX : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     public bool IsShaking = false;
 
-    public void Shake()
+    public void Shake(float strength=1.0f)
     {
         if (IsShaking) return;
         IsShaking = true;
         Vector3 originalPosition = transform.localPosition;
-        transform.DOShakePosition(shakeDuration, shakeStrength, shakeVibrato, 90f)
+        transform.DOShakePosition(shakeDuration, strength * shakeStrength, shakeVibrato, 90f)
             .OnComplete((() =>
             {
                 transform.localPosition = originalPosition;

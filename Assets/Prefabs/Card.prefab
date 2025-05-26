@@ -28,7 +28,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 2.8, z: 0}
-  m_LocalScale: {x: 0.05, y: 0.2, z: 1}
+  m_LocalScale: {x: 0.05, y: 0.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7558046680863589844}
@@ -186,11 +186,11 @@ MonoBehaviour:
   swingYOffset: 0.1
   swingDurationY: 0.5
   disappearYOffset: -10
-  disappearDuration: 1
+  disappearDuration: 0.3
   hoverScale: 1.05
   scaleDuration: 0.2
   shakeDuration: 0.2
-  shakeStrength: 2
+  shakeStrength: 1
   shakeVibrato: 20
   IsAppearOnStart: 1
   IsShaking: 0
